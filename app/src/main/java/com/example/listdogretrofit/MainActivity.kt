@@ -3,14 +3,12 @@ package com.example.listdogretrofit
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
-import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.listdogretrofit.databinding.ActivityMainBinding
 import com.example.listdogretrofit.doglist.APIService
 import com.example.listdogretrofit.doglist.DogAdapter
 import com.example.listdogretrofit.doglist.DogsResponse
-import com.google.android.material.internal.ViewUtils.hideKeyboard
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,7 +17,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 private lateinit var binding: ActivityMainBinding
 private lateinit var adapter: DogAdapter
-private val dogImage = mutableListOf<String>() // las imagenes deben cambiar del recycler view por eso debemos
+private val dogImage =
+    mutableListOf<String>() // las imagenes deben cambiar del recycler view por eso debemos
 // modificar el listado que le estamos pasando
 
 class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -33,13 +32,13 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
         setContentView(binding.root)
         binding.svDogs.setOnQueryTextListener(this)
         initRecyclerView()
-
     }
 
     private fun initRecyclerView() {
         adapter = DogAdapter(dogImage)
         binding.recyclerDogs.layoutManager = LinearLayoutManager(this)
         binding.recyclerDogs.adapter = adapter
+
 
     }
 
@@ -57,14 +56,17 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
         CoroutineScope(Dispatchers.IO).launch {
             val retrofit = getRetrofit()
 
-            val service = retrofit.create(APIService::class.java) // esta linea nos indica como se llama a la Api
+            val service =
+                retrofit.create(APIService::class.java) // esta linea nos indica como se llama a la Api
             val call = service.getDogsByBreeds("$query/images")
-            val puppies: DogsResponse? = call.body() // puppies es la representacion de json que te devuelve la Api
+            val puppies: DogsResponse? =
+                call.body() // puppies es la representacion de json que te devuelve la Api
             // como volvemos al hilo principal llamando a runOnUiThread
             runOnUiThread {
                 if (call.isSuccessful) {
                     //show recycleView
-                    val images = puppies?.images ?: emptyList() // ?: si lo de atras que me han puesto es nulo llamo a la funcion emptyList
+                    val images = puppies?.images
+                        ?: emptyList() // ?: si lo de atras que me han puesto es nulo llamo a la funcion emptyList
 
                     dogImage.clear()
                     dogImage.addAll(images)
