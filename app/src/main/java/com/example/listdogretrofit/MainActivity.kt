@@ -3,6 +3,7 @@ package com.example.listdogretrofit
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.listdogretrofit.databinding.ActivityMainBinding
@@ -90,7 +91,7 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (!query.isNullOrEmpty()) {
-            searchByname(query.toLowerCase())
+            searchByname(query.trim().toLowerCase())
         }
         return true
     }
