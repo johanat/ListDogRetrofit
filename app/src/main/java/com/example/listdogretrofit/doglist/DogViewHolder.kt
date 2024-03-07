@@ -6,11 +6,5 @@ import com.example.listdogretrofit.databinding.ItemDogBinding
 import com.squareup.picasso.Picasso
 
 class DogViewHolder(view:View):RecyclerView.ViewHolder(view) {
-     val binding = ItemDogBinding.bind(view)
-
-    fun bind(image:String){
-        // para convertir una url en imagen
-
-        Picasso.get().load(image).into(binding.ivDog) // carga las imagenes de internet y las muestra en nuestra app
-    }
+    val binding = ItemDogBinding.bind(view)
 }

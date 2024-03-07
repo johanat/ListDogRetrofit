@@ -3,7 +3,6 @@ package com.example.listdogretrofit
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.listdogretrofit.databinding.ActivityMainBinding
@@ -13,13 +12,13 @@ import com.example.listdogretrofit.doglist.DogsResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 private lateinit var binding: ActivityMainBinding
 private lateinit var adapter: DogAdapter
-private val dogImage =
-    mutableListOf<String>() // las imagenes deben cambiar del recycler view por eso debemos
+private val dogImage = mutableListOf<String>() // las imagenes deben cambiar del recycler view por eso debemos
 // modificar el listado que le estamos pasando
 
 class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -53,17 +52,18 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
     /*corrutinas el uso principal es ejecutar de forma asincronas,( que no lo hace a la misma vez,
     en tiempo de ejecucion se hace en un hilo secundario que seria la llamada a internet*/
     /*CORRUTINA */
-    private fun searchByname(query: String) {
+    private fun searchByName(query: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val retrofit = getRetrofit()
 
             val service =
                 retrofit.create(APIService::class.java) // esta linea nos indica como se llama a la Api
+
             val call = service.getDogsByBreeds("$query/images")
-            val puppies: DogsResponse? =
-                call.body() // puppies es la representacion de json que te devuelve la Api
+            val puppies: DogsResponse? = call.body() // puppies es la representacion de json que te devuelve la Api
+
             // como volvemos al hilo principal llamando a runOnUiThread
-            runOnUiThread {
+            withContext(Dispatchers.Main){
                 if (call.isSuccessful) {
                     //show recycleView
                     val images = puppies?.images
@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
                 }
                 hideKeyboard()
             }
+
         }
     }
 
@@ -91,7 +92,7 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (!query.isNullOrEmpty()) {
-            searchByname(query.trim().toLowerCase())
+            searchByName(query.trim().toLowerCase())
         }
         return true
     }
