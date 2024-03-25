@@ -1,4 +1,4 @@
-package com.example.listdogretrofit.doglist
+package com.example.listdogretrofit.favorite
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -31,6 +31,7 @@ class DogAdapter(private val images: List<String>) : RecyclerView.Adapter<DogVie
             onFavClicked.invoke(url, position)
             Toast.makeText(holder.binding.root.context,"$position",Toast.LENGTH_SHORT).show()
         }
+
         Picasso.get().load(url).into(holder.binding.ivDog) //carga las imagenes de internet y las muestra en nuestra app
     }
 }

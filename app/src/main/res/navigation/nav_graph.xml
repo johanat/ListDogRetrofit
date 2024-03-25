@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dogsFrament">
+
+    <fragment
+        android:id="@+id/dogsFrament"
+        android:name="com.example.listdogretrofit.DogsFragment"
+        android:label="fragment_dogs_frament"
+        tools:layout="@layout/fragment_dogs_frament" >
+        <action
+            android:id="@+id/action_dogsFrament_to_dogDetailFragment"
+            app:destination="@id/dogDetailFragment" />
+        <action
+            android:id="@+id/action_dogsFrament_to_favoriteDogsFragment"
+            app:destination="@id/favoriteDogsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dogDetailFragment"
+        android:name="com.example.listdogretrofit.DogDetailFragment"
+        android:label="fragment_dog_detail"
+        tools:layout="@layout/fragment_dog_detail" >
+        <action
+            android:id="@+id/action_dogDetailFragment_to_dogsFrament"
+            app:destination="@id/dogsFrament" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteDogsFragment"
+        android:name="com.example.listdogretrofit.favorite.FavoriteDogsFragment"
+        android:label="fragment_favorite_dogs"
+        tools:layout="@layout/fragment_favorite_dogs" >
+        <action
+            android:id="@+id/action_favoriteDogsFragment_to_dogsFrament"
+            app:destination="@id/dogsFrament" />
+    </fragment>
+</navigation>
