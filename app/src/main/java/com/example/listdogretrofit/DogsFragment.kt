@@ -15,6 +15,7 @@ import com.example.listdogretrofit.doglist.AppDatabase
 import com.example.listdogretrofit.doglist.DogAdapter
 import com.example.listdogretrofit.doglist.DogEntity
 import com.example.listdogretrofit.doglist.DogsResponse
+import com.example.listdogretrofit.favorite.FavoriteDogsAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,6 +55,7 @@ class DogsFragment : Fragment(), androidx.appcompat.widget.SearchView.OnQueryTex
         binding.btnFlotating.setOnClickListener {
             val  activity =  activity as MainActivity
             activity.navController.navigate(R.id.action_dogsFrament_to_favoriteDogsFragment)
+            initRecyclerView()
         }
 
         adapter.onFavClicked = { url, _ ->

@@ -11,7 +11,7 @@ import kotlinx.coroutines.NonDisposableHandle.parent
 
 class DogAdapter(private val images: List<String>) : RecyclerView.Adapter<DogViewHolder>() {
 
-    var suma: (Int, Int)->Unit = { _, _ -> }
+
     var onFavClicked: (String, Int)->Unit = {_, _ ->}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogViewHolder {

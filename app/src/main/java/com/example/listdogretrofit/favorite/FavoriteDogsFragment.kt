@@ -10,21 +10,23 @@ import com.example.listdogretrofit.MainActivity
 import com.example.listdogretrofit.databinding.FragmentFavoriteDogsBinding
 import com.example.listdogretrofit.doglist.AppDatabase
 import com.example.listdogretrofit.doglist.DogAdapter
+import com.example.listdogretrofit.doglist.DogEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class FavoriteDogsFragment : Fragment() {
 
     lateinit var db : AppDatabase
     lateinit var  binding: FragmentFavoriteDogsBinding
-    private lateinit var adapter: DogAdapter
-    private val favoriteDog = mutableListOf<String>()
+    private lateinit var adapter: FavoriteDogsAdapter
+    private val favoriteDog = mutableListOf<DogEntity>()
 
     private fun initRecyclerView() {
 
-        adapter = DogAdapter(favoriteDog)
+        adapter = FavoriteDogsAdapter(favoriteDog)
         binding.recyclerDogs.layoutManager = LinearLayoutManager(context)
         binding.recyclerDogs.adapter = adapter
 
@@ -43,12 +45,21 @@ class FavoriteDogsFragment : Fragment() {
         db = (activity as MainActivity).db
         initRecyclerView()
         readFavoriteDogs()
+        adapter.onBtmDelete = {id, position ->
+            CoroutineScope(Dispatchers.IO).launch {
+                db.dogDao().delete(DogEntity(id,""))
+                favoriteDog.removeAt(position)
+                withContext(Dispatchers.Main){
+                    adapter.notifyDataSetChanged()
+                }
+            }
+        }
     }
     private fun readFavoriteDogs(){
       CoroutineScope(Dispatchers.IO).launch {
          val list = db.dogDao().getAll()
           list.forEach {
-              favoriteDog.add(it.url)
+              favoriteDog.add(it)
           }
       }
     }
