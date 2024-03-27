@@ -52,16 +52,16 @@ class DogsFragment : Fragment(), androidx.appcompat.widget.SearchView.OnQueryTex
         db = (activity as MainActivity).db
         binding.svDogs.setOnQueryTextListener(this)
         initRecyclerView()
-        binding.btnFlotating.setOnClickListener {
-            val  activity =  activity as MainActivity
-            activity.navController.navigate(R.id.action_dogsFrament_to_favoriteDogsFragment)
-            initRecyclerView()
-        }
 
         adapter.onFavClicked = { url, _ ->
             CoroutineScope(Dispatchers.IO).launch {
                 db.dogDao().insertAll(DogEntity(null, url))
             }
+        }
+        binding.btnFlotating.setOnClickListener {
+            val  activity =  activity as MainActivity
+            activity.navController.navigate(R.id.action_dogsFrament_to_favoriteDogsFragment)
+            initRecyclerView()
         }
     }
     private fun getRetrofit(): Retrofit {

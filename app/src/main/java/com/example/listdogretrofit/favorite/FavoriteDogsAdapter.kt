@@ -1,7 +1,9 @@
 package com.example.listdogretrofit.favorite
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.listdogretrofit.R
@@ -33,6 +35,11 @@ class FavoriteDogsAdapter(private val dogEntities: List<DogEntity>) : RecyclerVi
         }
         holder.binding.delete.setOnClickListener {
             onBtmDelete.invoke(dogEntity.id!!, position)
+        }
+        holder.binding.llContainer.visibility = View.GONE
+        holder.binding.tvName .setOnClickListener {
+            holder.binding.tvName.visibility = View.GONE
+            holder.binding.llContainer.visibility = View.VISIBLE
         }
 
         Picasso.get().load(dogEntity.url).into(holder.binding.ivDog) //carga las imagenes de internet y las muestra en nuestra app

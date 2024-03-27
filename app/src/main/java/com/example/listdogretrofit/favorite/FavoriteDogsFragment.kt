@@ -25,13 +25,10 @@ class FavoriteDogsFragment : Fragment() {
     private val favoriteDog = mutableListOf<DogEntity>()
 
     private fun initRecyclerView() {
-
         adapter = FavoriteDogsAdapter(favoriteDog)
         binding.recyclerDogs.layoutManager = LinearLayoutManager(context)
         binding.recyclerDogs.adapter = adapter
-
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,7 +47,7 @@ class FavoriteDogsFragment : Fragment() {
                 db.dogDao().delete(DogEntity(id,""))
                 favoriteDog.removeAt(position)
                 withContext(Dispatchers.Main){
-                    adapter.notifyDataSetChanged()
+                    adapter.notifyItemRemoved(position)
                 }
             }
         }
@@ -60,6 +57,9 @@ class FavoriteDogsFragment : Fragment() {
          val list = db.dogDao().getAll()
           list.forEach {
               favoriteDog.add(it)
+              withContext(Dispatchers.Main){
+                  adapter.notifyDataSetChanged()
+              }
           }
       }
     }
