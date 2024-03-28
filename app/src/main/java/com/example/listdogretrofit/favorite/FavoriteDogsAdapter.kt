@@ -14,7 +14,7 @@ class FavoriteDogsAdapter(private val dogEntities: List<DogEntity>) : RecyclerVi
 
     var onFavClicked: (String, Int)->Unit = {_, _ ->}
     var onBtmDelete: (Int, Int)->Unit = { _, _ ->}
-
+    var onChangeName: (String, Int, String, Int)->Unit = {_, _, _, _->}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -37,11 +37,18 @@ class FavoriteDogsAdapter(private val dogEntities: List<DogEntity>) : RecyclerVi
             onBtmDelete.invoke(dogEntity.id!!, position)
         }
         holder.binding.llContainer.visibility = View.GONE
-        holder.binding.tvName .setOnClickListener {
+        holder.binding.tvName.setOnClickListener {
             holder.binding.tvName.visibility = View.GONE
             holder.binding.llContainer.visibility = View.VISIBLE
+            var name = holder.binding.etDogName.text
+            holder.binding.btmConfirmar.setOnClickListener {
+                holder.binding.llContainer.visibility = View.GONE
+                onChangeName.invoke(name.toString(),dogEntity.id!!, dogEntity.url,position)
+                holder.binding.tvName.visibility = View.VISIBLE
+            }
         }
 
+        holder.binding.tvName.text = dogEntity.name
         Picasso.get().load(dogEntity.url).into(holder.binding.ivDog) //carga las imagenes de internet y las muestra en nuestra app
     }
 }

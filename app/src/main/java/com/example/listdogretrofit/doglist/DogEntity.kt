@@ -6,5 +6,6 @@ import androidx.room.PrimaryKey
 @Entity (tableName = "Dog")
 data class DogEntity(
     @PrimaryKey(autoGenerate = true) val id: Int?,
-    val url: String
+    val url: String,
+    val name: String = "Indefinido"
 )

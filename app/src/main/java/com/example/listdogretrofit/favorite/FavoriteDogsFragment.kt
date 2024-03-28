@@ -51,10 +51,20 @@ class FavoriteDogsFragment : Fragment() {
                 }
             }
         }
+        adapter.onChangeName = {name, id, url, position ->
+            CoroutineScope(Dispatchers.IO).launch {
+                db.dogDao().update(DogEntity(id,url,name))
+                readFavoriteDogs()
+                withContext(Dispatchers.Main){
+                    adapter.notifyItemChanged(position)
+                }
+            }
+        }
     }
     private fun readFavoriteDogs(){
       CoroutineScope(Dispatchers.IO).launch {
          val list = db.dogDao().getAll()
+          favoriteDog.clear()
           list.forEach {
               favoriteDog.add(it)
               withContext(Dispatchers.Main){
