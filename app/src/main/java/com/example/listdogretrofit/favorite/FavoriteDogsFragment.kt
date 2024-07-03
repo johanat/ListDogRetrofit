@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.listdogretrofit.MainActivity
 import com.example.listdogretrofit.databinding.FragmentFavoriteDogsBinding
 import com.example.listdogretrofit.doglist.AppDatabase
-import com.example.listdogretrofit.doglist.DogAdapter
 import com.example.listdogretrofit.doglist.DogEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +27,9 @@ class FavoriteDogsFragment : Fragment() {
         adapter = FavoriteDogsAdapter(favoriteDog)
         binding.recyclerDogs.layoutManager = LinearLayoutManager(context)
         binding.recyclerDogs.adapter = adapter
+
+
+
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,10 +69,13 @@ class FavoriteDogsFragment : Fragment() {
           favoriteDog.clear()
           list.forEach {
               favoriteDog.add(it)
+
               withContext(Dispatchers.Main){
                   adapter.notifyDataSetChanged()
               }
           }
       }
     }
+
+
 }

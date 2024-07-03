@@ -1,6 +1,7 @@
 package com.example.listdogretrofit.doglist
 
 import android.view.View
+import android.view.ViewParent
 import androidx.recyclerview.widget.RecyclerView
 import com.example.listdogretrofit.databinding.ItemDogBinding
 import com.squareup.picasso.Picasso

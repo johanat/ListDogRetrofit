@@ -19,5 +19,6 @@
 .externalNativeBuild
 .cxxs
 local.properties
-
+.idea/deploymentTargetSelector.xml
+.idea/other.xml
 

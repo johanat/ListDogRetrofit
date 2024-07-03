@@ -12,6 +12,9 @@ interface DogDao {
     @Query("SELECT * FROM Dog")
     fun getAll(): List<DogEntity>
 
+    @Query("SELECT * FROM Dog  where url = :url")
+    fun getFavorite(url: String): List<DogEntity>
+
     @Insert
     fun insertAll(vararg dogs: DogEntity)
 

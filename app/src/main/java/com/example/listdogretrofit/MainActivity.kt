@@ -1,27 +1,13 @@
 package com.example.listdogretrofit
 
 import android.os.Bundle
-import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import com.example.listdogretrofit.databinding.ActivityMainBinding
-import com.example.listdogretrofit.doglist.APIService
 import com.example.listdogretrofit.doglist.AppDatabase
-import com.example.listdogretrofit.doglist.DogAdapter
-import com.example.listdogretrofit.doglist.DogEntity
-import com.example.listdogretrofit.doglist.DogsResponse
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -40,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         navController = navHostFragment.navController
+        Log.i("johana","holis estoy en onCreate")
     }
     private fun createDb(): AppDatabase{
 
@@ -49,6 +36,38 @@ class MainActivity : AppCompatActivity() {
         ).build()
         return db
     }
+
+    override fun onStart() {
+        super.onStart()
+        Log.i("johana","holis estoy en onStar")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.i("johana","holis estoy en OnResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i("Johana", "holis estoy Pause")
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i("johana","holis estoy en onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("johana","holis estoy en onDestroy")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.i("johana","holis estoy en onStar")
+    }
+    
 
 
     /*corrutinas el uso principal es ejecutar de forma asincronas,( que no lo hace a la misma vez,

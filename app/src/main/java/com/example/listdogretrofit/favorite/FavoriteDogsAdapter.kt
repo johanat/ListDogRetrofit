@@ -48,6 +48,8 @@ class FavoriteDogsAdapter(private val dogEntities: List<DogEntity>) : RecyclerVi
             }
         }
 
+
+
         holder.binding.tvName.text = dogEntity.name
         Picasso.get().load(dogEntity.url).into(holder.binding.ivDog) //carga las imagenes de internet y las muestra en nuestra app
     }
